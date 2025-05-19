@@ -31,34 +31,6 @@ const Reports = () => {
     }
   };
 
-  const handlePrint = () => {
-    const printContent = printRef.current.innerHTML;
-    const originalContent = document.body.innerHTML;
-    
-    document.body.innerHTML = `
-      <html>
-        <head>
-          <title>Monthly Payroll Report - ${month}</title>
-          <style>
-            body { font-family: Arial, sans-serif; }
-            table { width: 100%; border-collapse: collapse; }
-            th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
-            th { background-color: #f2f2f2; }
-            h1, h2 { text-align: center; }
-            .report-header { margin-bottom: 20px; }
-            .text-right { text-align: right; }
-          </style>
-        </head>
-        <body>
-          ${printContent}
-        </body>
-      </html>
-    `;
-    
-    window.print();
-    document.body.innerHTML = originalContent;
-  };
-
   const calculateTotals = () => {
     return reportData.reduce(
       (totals, record) => {
@@ -122,15 +94,7 @@ const Reports = () => {
                   <h2 className="text-xl font-semibold text-gray-900">
                     Payroll Report for {month}
                   </h2>
-                  <button
-                    onClick={handlePrint}
-                    className="btn-primary flex items-center"
-                  >
-                    <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z" />
-                    </svg>
-                    Print Report
-                  </button>
+                  
                 </div>
 
                 <div ref={printRef}>
