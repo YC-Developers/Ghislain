@@ -11,10 +11,10 @@ import Employees from './components/Employees';
 import Departments from './components/Departments';
 import Salaries from './components/Salaries';
 import Reports from './components/Reports';
-import Navbar from './components/Navbar';
+import Layout from './components/layout/Layout';
 
 // Set default axios settings
-axios.defaults.baseURL = 'http://localhost:4000';
+axios.defaults.baseURL = 'http://localhost:5000';
 axios.defaults.withCredentials = true;
 
 // Add request interceptor for debugging
@@ -94,8 +94,8 @@ function App() {
     return (
       <div className="flex items-center justify-center min-h-screen bg-gray-100">
         <div className="text-center">
-          <div className="w-16 h-16 border-4 border-blue-500 border-t-transparent rounded-full animate-spin mx-auto"></div>
-          <p className="mt-4 text-lg text-gray-700">Loading...</p>
+          <div className="w-16 h-16 border-4 border-darkred-700 border-t-transparent rounded-full animate-spin mx-auto"></div>
+          <p className="mt-4 text-lg text-darkred-900">Loading...</p>
         </div>
       </div>
     );
@@ -104,40 +104,32 @@ function App() {
   return (
     <Router>
       <div className="min-h-screen bg-gray-50">
-        {isAuthenticated && <Navbar user={user} onLogout={handleLogout} />}
-        <div className="container mx-auto px-4 py-4">
-          <Routes>
-            <Route
-              path="/register"
-              element={isAuthenticated ? <Navigate to="/" /> : <Register />}
-            />
-            <Route
-              path="/login"
-              element={isAuthenticated ? <Navigate to="/" /> : <Login onLogin={handleLogin} />}
-            />
-            <Route
-              path="/"
-              element={isAuthenticated ? <Dashboard user={user} /> : <Navigate to="/register" />}
-            />
-            <Route
-              path="/employees"
-              element={isAuthenticated ? <Employees /> : <Navigate to="/register" />}
-            />
-            <Route
-              path="/departments"
-              element={isAuthenticated ? <Departments /> : <Navigate to="/register" />}
-            />
-            <Route
-              path="/salaries"
-              element={isAuthenticated ? <Salaries /> : <Navigate to="/register" />}
-            />
-            <Route
-              path="/reports"
-              element={isAuthenticated ? <Reports /> : <Navigate to="/register" />}
-            />
-            <Route path="*" element={<Navigate to="/" />} />
-          </Routes>
-        </div>
+        {!isAuthenticated ? (
+          <div className="container mx-auto px-4 py-4">
+            <Routes>
+              <Route
+                path="/register"
+                element={isAuthenticated ? <Navigate to="/" /> : <Register />}
+              />
+              <Route
+                path="/login"
+                element={isAuthenticated ? <Navigate to="/" /> : <Login onLogin={handleLogin} />}
+              />
+              <Route path="*" element={<Navigate to="/register" />} />
+            </Routes>
+          </div>
+        ) : (
+          <Layout user={user} onLogout={handleLogout}>
+            <Routes>
+              <Route path="/" element={<Dashboard user={user} />} />
+              <Route path="/employees" element={<Employees />} />
+              <Route path="/departments" element={<Departments />} />
+              <Route path="/salaries" element={<Salaries />} />
+              <Route path="/reports" element={<Reports />} />
+              <Route path="*" element={<Navigate to="/" />} />
+            </Routes>
+          </Layout>
+        )}
       </div>
     </Router>
   );

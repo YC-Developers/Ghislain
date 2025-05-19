@@ -108,8 +108,8 @@ const Register = () => {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gray-50">
         <div className="text-center">
-          <div className="w-16 h-16 border-4 border-blue-500 border-t-transparent rounded-full animate-spin mx-auto"></div>
-          <p className="mt-4 text-lg text-gray-700">Checking system status...</p>
+          <div className="w-16 h-16 border-4 border-darkred-700 border-t-transparent rounded-full animate-spin mx-auto"></div>
+          <p className="mt-4 text-lg text-darkred-900">Checking system status...</p>
         </div>
       </div>
     );

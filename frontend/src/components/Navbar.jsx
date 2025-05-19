@@ -23,7 +23,7 @@ const Navbar = ({ user, onLogout }) => {
         <div className="flex justify-between h-16">
           <div className="flex">
             <div className="flex-shrink-0 flex items-center">
-              <Link to="/" className="text-white text-xl font-bold">
+              <Link to="/" className="text-white text-2xl font-bold">
                 EPMS
               </Link>
             </div>
@@ -31,8 +31,8 @@ const Navbar = ({ user, onLogout }) => {
               <Link
                 to="/"
                 className={`${
-                  isActive('/') 
-                    ? 'border-white text-white' 
+                  isActive('/')
+                    ? 'border-white text-white'
                     : 'border-transparent text-blue-100 hover:border-blue-300 hover:text-white'
                 } inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium`}
               >
@@ -41,8 +41,8 @@ const Navbar = ({ user, onLogout }) => {
               <Link
                 to="/employees"
                 className={`${
-                  isActive('/employees') 
-                    ? 'border-white text-white' 
+                  isActive('/employees')
+                    ? 'border-white text-white'
                     : 'border-transparent text-blue-100 hover:border-blue-300 hover:text-white'
                 } inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium`}
               >
@@ -51,8 +51,8 @@ const Navbar = ({ user, onLogout }) => {
               <Link
                 to="/departments"
                 className={`${
-                  isActive('/departments') 
-                    ? 'border-white text-white' 
+                  isActive('/departments')
+                    ? 'border-white text-white'
                     : 'border-transparent text-blue-100 hover:border-blue-300 hover:text-white'
                 } inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium`}
               >
@@ -61,8 +61,8 @@ const Navbar = ({ user, onLogout }) => {
               <Link
                 to="/salaries"
                 className={`${
-                  isActive('/salaries') 
-                    ? 'border-white text-white' 
+                  isActive('/salaries')
+                    ? 'border-white text-white'
                     : 'border-transparent text-blue-100 hover:border-blue-300 hover:text-white'
                 } inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium`}
               >
@@ -71,8 +71,8 @@ const Navbar = ({ user, onLogout }) => {
               <Link
                 to="/reports"
                 className={`${
-                  isActive('/reports') 
-                    ? 'border-white text-white' 
+                  isActive('/reports')
+                    ? 'border-white text-white'
                     : 'border-transparent text-blue-100 hover:border-blue-300 hover:text-white'
                 } inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium`}
               >
@@ -147,8 +147,8 @@ const Navbar = ({ user, onLogout }) => {
               to="/"
               onClick={closeMobileMenu}
               className={`${
-                isActive('/') 
-                  ? 'bg-blue-700 text-white' 
+                isActive('/')
+                  ? 'bg-blue-700 text-white'
                   : 'text-blue-100 hover:bg-blue-700 hover:text-white'
               } block pl-3 pr-4 py-2 border-l-4 border-transparent text-base font-medium`}
             >
@@ -158,8 +158,8 @@ const Navbar = ({ user, onLogout }) => {
               to="/employees"
               onClick={closeMobileMenu}
               className={`${
-                isActive('/employees') 
-                  ? 'bg-blue-700 text-white' 
+                isActive('/employees')
+                  ? 'bg-blue-700 text-white'
                   : 'text-blue-100 hover:bg-blue-700 hover:text-white'
               } block pl-3 pr-4 py-2 border-l-4 border-transparent text-base font-medium`}
             >
@@ -169,8 +169,8 @@ const Navbar = ({ user, onLogout }) => {
               to="/departments"
               onClick={closeMobileMenu}
               className={`${
-                isActive('/departments') 
-                  ? 'bg-blue-700 text-white' 
+                isActive('/departments')
+                  ? 'bg-blue-700 text-white'
                   : 'text-blue-100 hover:bg-blue-700 hover:text-white'
               } block pl-3 pr-4 py-2 border-l-4 border-transparent text-base font-medium`}
             >
@@ -180,8 +180,8 @@ const Navbar = ({ user, onLogout }) => {
               to="/salaries"
               onClick={closeMobileMenu}
               className={`${
-                isActive('/salaries') 
-                  ? 'bg-blue-700 text-white' 
+                isActive('/salaries')
+                  ? 'bg-blue-700 text-white'
                   : 'text-blue-100 hover:bg-blue-700 hover:text-white'
               } block pl-3 pr-4 py-2 border-l-4 border-transparent text-base font-medium`}
             >
@@ -191,8 +191,8 @@ const Navbar = ({ user, onLogout }) => {
               to="/reports"
               onClick={closeMobileMenu}
               className={`${
-                isActive('/reports') 
-                  ? 'bg-blue-700 text-white' 
+                isActive('/reports')
+                  ? 'bg-blue-700 text-white'
                   : 'text-blue-100 hover:bg-blue-700 hover:text-white'
               } block pl-3 pr-4 py-2 border-l-4 border-transparent text-base font-medium`}
             >

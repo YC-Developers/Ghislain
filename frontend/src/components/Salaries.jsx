@@ -39,12 +39,12 @@ const Salaries = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    
+
     if (name === 'grossSalary' || name === 'totalDeduction') {
       const grossSalary = name === 'grossSalary' ? parseFloat(value) || 0 : parseFloat(formData.grossSalary) || 0;
       const totalDeduction = name === 'totalDeduction' ? parseFloat(value) || 0 : parseFloat(formData.totalDeduction) || 0;
       const netSalary = Math.max(0, grossSalary - totalDeduction).toFixed(2);
-      
+
       setFormData({
         ...formData,
         [name]: value,
@@ -71,19 +71,19 @@ const Salaries = () => {
           netSalary: formData.netSalary,
           month: formData.month
         });
-        
+
         // Update the salaries list
-        setSalaries(salaries.map(salary => 
+        setSalaries(salaries.map(salary =>
           salary.id === formData.id ? { ...salary, ...response.data.salary } : salary
         ));
       } else {
         // Create new salary record
         const response = await axios.post('/api/salaries', formData);
-        
+
         // Add the new salary to the list
         const newSalary = response.data.salary;
         const employee = employees.find(emp => emp.employeeNumber === parseInt(newSalary.employeeNumber));
-        
+
         setSalaries([...salaries, {
           ...newSalary,
           firstName: employee?.firstName,
@@ -92,7 +92,7 @@ const Salaries = () => {
           departmentName: employee?.departmentName
         }]);
       }
-      
+
       // Reset form
       resetForm();
     } catch (error) {
@@ -120,9 +120,9 @@ const Salaries = () => {
     if (!confirm('Are you sure you want to delete this salary record?')) {
       return;
     }
-    
+
     setLoading(true);
-    
+
     try {
       await axios.delete(`/api/salaries/${id}`);
       setSalaries(salaries.filter(salary => salary.id !== id));
@@ -150,7 +150,7 @@ const Salaries = () => {
   if (loading && salaries.length === 0) {
     return (
       <div className="flex justify-center items-center h-64">
-        <div className="w-12 h-12 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
+        <div className="w-12 h-12 border-4 border-darkred-700 border-t-transparent rounded-full animate-spin"></div>
       </div>
     );
   }
@@ -200,8 +200,8 @@ const Salaries = () => {
                   {editMode ? 'Edit Salary Record' : 'New Salary Record'}
                 </h3>
                 <p className="mt-1 text-sm text-gray-500">
-                  {editMode 
-                    ? 'Update the salary information for this employee.' 
+                  {editMode
+                    ? 'Update the salary information for this employee.'
                     : 'Add a new salary record to the system.'}
                 </p>
               </div>
@@ -348,21 +348,31 @@ const Salaries = () => {
                       <td>{salary.position}</td>
                       <td>{salary.departmentName}</td>
                       <td>{salary.month}</td>
-                      <td>${parseFloat(salary.grossSalary).toFixed(2)}</td>
-                      <td>${parseFloat(salary.totalDeduction).toFixed(2)}</td>
-                      <td>${parseFloat(salary.netSalary).toFixed(2)}</td>
+                      <td>{parseFloat(salary.grossSalary).toFixed(2)} RWF</td>
+                      <td>{parseFloat(salary.totalDeduction).toFixed(2)} RWF</td>
+                      <td>{parseFloat(salary.netSalary).toFixed(2)} RWF</td>
                       <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                         <button
                           onClick={() => handleEdit(salary)}
-                          className="text-blue-600 hover:text-blue-900 mr-4"
+                          className="text-darkred-600 hover:text-darkred-900 mr-4 transition-colors duration-200"
                         >
-                          Edit
+                          <span className="flex items-center">
+                            <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                            </svg>
+                            Edit
+                          </span>
                         </button>
                         <button
                           onClick={() => handleDelete(salary.id)}
-                          className="text-red-600 hover:text-red-900"
+                          className="text-red-600 hover:text-red-900 transition-colors duration-200"
                         >
-                          Delete
+                          <span className="flex items-center">
+                            <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                            </svg>
+                            Delete
+                          </span>
                         </button>
                       </td>
                     </tr>
