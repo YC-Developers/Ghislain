@@ -11,6 +11,7 @@ const Departments = () => {
     departmentName: '',
     grossSalary: ''
   });
+  const [editMode, setEditMode] = useState(false);
 
   useEffect(() => {
     const fetchDepartments = async () => {
@@ -41,26 +42,69 @@ const Departments = () => {
     setLoading(true);
 
     try {
-      const response = await axios.post('/api/departments', formData);
-      setDepartments([...departments, response.data.department]);
-      setFormData({
-        departmentCode: '',
-        departmentName: '',
-        grossSalary: ''
-      });
-      setShowForm(false);
+      if (editMode) {
+        // Update existing department
+        const response = await axios.put(`/api/departments/${formData.departmentCode}`, formData);
+        setDepartments(departments.map(dept =>
+          dept.departmentCode === formData.departmentCode ? response.data.department : dept
+        ));
+      } else {
+        // Create new department
+        const response = await axios.post('/api/departments', formData);
+        setDepartments([...departments, response.data.department]);
+      }
+
+      resetForm();
     } catch (error) {
-      console.error('Error creating department:', error);
-      setError(error.response?.data?.message || 'Failed to create department. Please try again.');
+      console.error(`Error ${editMode ? 'updating' : 'creating'} department:`, error);
+      setError(error.response?.data?.message || `Failed to ${editMode ? 'update' : 'create'} department. Please try again.`);
     } finally {
       setLoading(false);
     }
   };
 
+  const handleEdit = (department) => {
+    setFormData({
+      departmentCode: department.departmentCode,
+      departmentName: department.departmentName,
+      grossSalary: department.grossSalary
+    });
+    setEditMode(true);
+    setShowForm(true);
+  };
+
+  const handleDelete = async (departmentCode) => {
+    if (!confirm('Are you sure you want to delete this department?')) {
+      return;
+    }
+
+    setLoading(true);
+
+    try {
+      await axios.delete(`/api/departments/${departmentCode}`);
+      setDepartments(departments.filter(dept => dept.departmentCode !== departmentCode));
+    } catch (error) {
+      console.error('Error deleting department:', error);
+      setError(error.response?.data?.message || 'Failed to delete department. Please try again.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const resetForm = () => {
+    setFormData({
+      departmentCode: '',
+      departmentName: '',
+      grossSalary: ''
+    });
+    setEditMode(false);
+    setShowForm(false);
+  };
+
   if (loading && departments.length === 0) {
     return (
       <div className="flex justify-center items-center h-64">
-        <div className="w-12 h-12 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
+        <div className="w-12 h-12 border-4 border-darkred-700 border-t-transparent rounded-full animate-spin"></div>
       </div>
     );
   }
@@ -71,7 +115,14 @@ const Departments = () => {
         <div className="flex justify-between items-center">
           <h1 className="text-2xl font-semibold text-gray-900">Departments</h1>
           <button
-            onClick={() => setShowForm(!showForm)}
+            onClick={() => {
+              if (showForm && !editMode) {
+                setShowForm(false);
+              } else {
+                resetForm();
+                setShowForm(!showForm);
+              }
+            }}
             className="btn-primary flex items-center"
           >
             {showForm ? (
@@ -103,9 +154,13 @@ const Departments = () => {
           <div className="mt-6 bg-white shadow px-4 py-5 sm:rounded-lg sm:p-6">
             <div className="md:grid md:grid-cols-3 md:gap-6">
               <div className="md:col-span-1">
-                <h3 className="text-lg font-medium leading-6 text-gray-900">Department Information</h3>
+                <h3 className="text-lg font-medium leading-6 text-gray-900">
+                  {editMode ? 'Edit Department' : 'Department Information'}
+                </h3>
                 <p className="mt-1 text-sm text-gray-500">
-                  Add a new department to the system.
+                  {editMode
+                    ? 'Update the department information.'
+                    : 'Add a new department to the system.'}
                 </p>
               </div>
               <div className="mt-5 md:mt-0 md:col-span-2">
@@ -162,7 +217,7 @@ const Departments = () => {
                     <button
                       type="button"
                       className="btn-secondary mr-3"
-                      onClick={() => setShowForm(false)}
+                      onClick={() => resetForm()}
                     >
                       Cancel
                     </button>
@@ -171,7 +226,7 @@ const Departments = () => {
                       className="btn-primary"
                       disabled={loading}
                     >
-                      {loading ? 'Saving...' : 'Save'}
+                      {loading ? 'Saving...' : editMode ? 'Update' : 'Save'}
                     </button>
                   </div>
                 </form>
@@ -188,12 +243,13 @@ const Departments = () => {
                   <th scope="col">Department Code</th>
                   <th scope="col">Department Name</th>
                   <th scope="col">Gross Salary</th>
+                  <th scope="col">Actions</th>
                 </tr>
               </thead>
               <tbody>
                 {departments.length === 0 ? (
                   <tr>
-                    <td colSpan="3" className="px-6 py-4 text-center text-gray-500">
+                    <td colSpan="4" className="px-6 py-4 text-center text-gray-500">
                       No departments found. Add a new department to get started.
                     </td>
                   </tr>
@@ -202,7 +258,31 @@ const Departments = () => {
                     <tr key={department.departmentCode}>
                       <td>{department.departmentCode}</td>
                       <td>{department.departmentName}</td>
-                      <td>${parseFloat(department.grossSalary).toFixed(2)}</td>
+                      <td>{parseFloat(department.grossSalary).toFixed(2)} RWF</td>
+                      <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                        <button
+                          onClick={() => handleEdit(department)}
+                          className="text-darkred-600 hover:text-darkred-900 mr-4 transition-colors duration-200"
+                        >
+                          <span className="flex items-center">
+                            <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                            </svg>
+                            Edit
+                          </span>
+                        </button>
+                        <button
+                          onClick={() => handleDelete(department.departmentCode)}
+                          className="text-red-600 hover:text-red-900 transition-colors duration-200"
+                        >
+                          <span className="flex items-center">
+                            <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                            </svg>
+                            Delete
+                          </span>
+                        </button>
+                      </td>
                     </tr>
                   ))
                 )}

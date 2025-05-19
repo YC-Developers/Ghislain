@@ -40,6 +40,7 @@ const Salaries = () => {
   const handleChange = (e) => {
     const { name, value } = e.target;
 
+<<<<<<< HEAD
     if (name === 'employeeNumber') {
       // When employee is selected, auto-fill the gross salary from department
       const selectedEmployee = employees.find(emp => emp.employeeNumber === parseInt(value));
@@ -61,6 +62,9 @@ const Salaries = () => {
         });
       }
     } else if (name === 'grossSalary' || name === 'totalDeduction') {
+=======
+    if (name === 'grossSalary' || name === 'totalDeduction') {
+>>>>>>> e66a3ccf81839cb450375bf6a2533ff36cafb2b8
       const grossSalary = name === 'grossSalary' ? parseFloat(value) || 0 : parseFloat(formData.grossSalary) || 0;
       const totalDeduction = name === 'totalDeduction' ? parseFloat(value) || 0 : parseFloat(formData.totalDeduction) || 0;
       const netSalary = Math.max(0, grossSalary - totalDeduction).toFixed(2);
@@ -170,7 +174,7 @@ const Salaries = () => {
   if (loading && salaries.length === 0) {
     return (
       <div className="flex justify-center items-center h-64">
-        <div className="w-12 h-12 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
+        <div className="w-12 h-12 border-4 border-darkred-700 border-t-transparent rounded-full animate-spin"></div>
       </div>
     );
   }
@@ -373,21 +377,31 @@ const Salaries = () => {
                       <td>{salary.position}</td>
                       <td>{salary.departmentName}</td>
                       <td>{salary.month}</td>
-                      <td>${parseFloat(salary.grossSalary).toFixed(2)}</td>
-                      <td>${parseFloat(salary.totalDeduction).toFixed(2)}</td>
-                      <td>${parseFloat(salary.netSalary).toFixed(2)}</td>
+                      <td>{parseFloat(salary.grossSalary).toFixed(2)} RWF</td>
+                      <td>{parseFloat(salary.totalDeduction).toFixed(2)} RWF</td>
+                      <td>{parseFloat(salary.netSalary).toFixed(2)} RWF</td>
                       <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                         <button
                           onClick={() => handleEdit(salary)}
-                          className="text-blue-600 hover:text-blue-900 mr-4"
+                          className="text-darkred-600 hover:text-darkred-900 mr-4 transition-colors duration-200"
                         >
-                          Edit
+                          <span className="flex items-center">
+                            <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                            </svg>
+                            Edit
+                          </span>
                         </button>
                         <button
                           onClick={() => handleDelete(salary.id)}
-                          className="text-red-600 hover:text-red-900"
+                          className="text-red-600 hover:text-red-900 transition-colors duration-200"
                         >
-                          Delete
+                          <span className="flex items-center">
+                            <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                            </svg>
+                            Delete
+                          </span>
                         </button>
                       </td>
                     </tr>
