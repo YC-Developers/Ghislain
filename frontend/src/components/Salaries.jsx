@@ -39,12 +39,32 @@ const Salaries = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    
-    if (name === 'grossSalary' || name === 'totalDeduction') {
+
+    if (name === 'employeeNumber') {
+      // When employee is selected, auto-fill the gross salary from department
+      const selectedEmployee = employees.find(emp => emp.employeeNumber === parseInt(value));
+      if (selectedEmployee && selectedEmployee.departmentGrossSalary) {
+        const grossSalary = parseFloat(selectedEmployee.departmentGrossSalary);
+        const totalDeduction = parseFloat(formData.totalDeduction) || 0;
+        const netSalary = Math.max(0, grossSalary - totalDeduction).toFixed(2);
+
+        setFormData({
+          ...formData,
+          employeeNumber: value,
+          grossSalary: grossSalary.toFixed(2),
+          netSalary
+        });
+      } else {
+        setFormData({
+          ...formData,
+          employeeNumber: value
+        });
+      }
+    } else if (name === 'grossSalary' || name === 'totalDeduction') {
       const grossSalary = name === 'grossSalary' ? parseFloat(value) || 0 : parseFloat(formData.grossSalary) || 0;
       const totalDeduction = name === 'totalDeduction' ? parseFloat(value) || 0 : parseFloat(formData.totalDeduction) || 0;
       const netSalary = Math.max(0, grossSalary - totalDeduction).toFixed(2);
-      
+
       setFormData({
         ...formData,
         [name]: value,
@@ -71,19 +91,19 @@ const Salaries = () => {
           netSalary: formData.netSalary,
           month: formData.month
         });
-        
+
         // Update the salaries list
-        setSalaries(salaries.map(salary => 
+        setSalaries(salaries.map(salary =>
           salary.id === formData.id ? { ...salary, ...response.data.salary } : salary
         ));
       } else {
         // Create new salary record
         const response = await axios.post('/api/salaries', formData);
-        
+
         // Add the new salary to the list
         const newSalary = response.data.salary;
         const employee = employees.find(emp => emp.employeeNumber === parseInt(newSalary.employeeNumber));
-        
+
         setSalaries([...salaries, {
           ...newSalary,
           firstName: employee?.firstName,
@@ -92,7 +112,7 @@ const Salaries = () => {
           departmentName: employee?.departmentName
         }]);
       }
-      
+
       // Reset form
       resetForm();
     } catch (error) {
@@ -120,9 +140,9 @@ const Salaries = () => {
     if (!confirm('Are you sure you want to delete this salary record?')) {
       return;
     }
-    
+
     setLoading(true);
-    
+
     try {
       await axios.delete(`/api/salaries/${id}`);
       setSalaries(salaries.filter(salary => salary.id !== id));
@@ -200,8 +220,8 @@ const Salaries = () => {
                   {editMode ? 'Edit Salary Record' : 'New Salary Record'}
                 </h3>
                 <p className="mt-1 text-sm text-gray-500">
-                  {editMode 
-                    ? 'Update the salary information for this employee.' 
+                  {editMode
+                    ? 'Update the salary information for this employee.'
                     : 'Add a new salary record to the system.'}
                 </p>
               </div>
@@ -261,6 +281,11 @@ const Salaries = () => {
                         value={formData.grossSalary}
                         onChange={handleChange}
                       />
+                      {!editMode && (
+                        <p className="mt-1 text-sm text-blue-600">
+                          Auto-filled from department's gross salary when employee is selected
+                        </p>
+                      )}
                     </div>
 
                     <div className="col-span-6 sm:col-span-3">

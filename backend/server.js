@@ -366,7 +366,7 @@ app.post('/api/employees', isAuthenticated, (req, res) => {
 
 app.get('/api/employees', isAuthenticated, (_, res) => {
   const query = `
-    SELECT e.*, d.departmentName
+    SELECT e.*, d.departmentName, d.grossSalary as departmentGrossSalary
     FROM employee e
     LEFT JOIN department d ON e.departmentCode = d.departmentCode
     ORDER BY e.lastName, e.firstName
@@ -385,7 +385,7 @@ app.get('/api/employees/:employeeNumber', isAuthenticated, (req, res) => {
   const { employeeNumber } = req.params;
 
   const query = `
-    SELECT e.*, d.departmentName
+    SELECT e.*, d.departmentName, d.grossSalary as departmentGrossSalary
     FROM employee e
     LEFT JOIN department d ON e.departmentCode = d.departmentCode
     WHERE e.employeeNumber = ?
