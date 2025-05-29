@@ -93,7 +93,7 @@ const Register = () => {
         setError(error.response.data.message || 'Registration failed. Please try again.');
       } else if (error.request) {
         // Network error - no response received
-        setError('Network error. Please check if the backend server is running on port 5000.');
+        setError('Network error. Please check if the backend server is running on port 4000.');
         console.error('Network error details:', error.request);
       } else {
         // Other errors
@@ -108,8 +108,8 @@ const Register = () => {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gray-50">
         <div className="text-center">
-          <div className="w-16 h-16 border-4 border-darkred-700 border-t-transparent rounded-full animate-spin mx-auto"></div>
-          <p className="mt-4 text-lg text-darkred-900">Checking system status...</p>
+          <div className="w-16 h-16 border-4 border-blue-600 border-t-transparent rounded-full animate-spin mx-auto"></div>
+          <p className="mt-4 text-lg text-blue-800">Checking system status...</p>
         </div>
       </div>
     );

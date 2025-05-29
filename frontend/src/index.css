@@ -1,0 +1,106 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  .btn-primary {
+    @apply py-2 px-4 bg-blue-600 text-white font-semibold rounded-lg shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-75;
+  }
+
+  .btn-secondary {
+    @apply py-2 px-4 bg-gray-200 text-gray-700 font-semibold rounded-lg shadow-md hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-opacity-75;
+  }
+
+  .form-label {
+    @apply block text-sm font-medium text-gray-700 mb-1;
+  }
+
+  .form-input {
+    @apply mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm;
+  }
+
+  .table-container {
+    @apply overflow-x-auto rounded-lg shadow;
+  }
+
+  .data-table {
+    @apply min-w-full divide-y divide-gray-200;
+  }
+
+  .data-table thead {
+    @apply bg-gray-50;
+  }
+
+  .data-table th {
+    @apply px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider;
+  }
+
+  .data-table tbody {
+    @apply bg-white divide-y divide-gray-200;
+  }
+
+  .data-table td {
+    @apply px-6 py-4 whitespace-nowrap text-sm text-gray-500;
+  }
+
+  .card {
+    @apply bg-white shadow-md rounded-lg p-6 mb-6;
+  }
+
+  .card-title {
+    @apply text-xl font-semibold text-gray-800 mb-4;
+  }
+
+  /* Signature section styles */
+  .signature-section {
+    @apply mt-12 flex justify-between items-end;
+  }
+
+  .signature-box {
+    @apply w-48 text-center;
+  }
+
+  .signature-line {
+    @apply border-t border-gray-400 mt-16 pt-2;
+  }
+
+  .report-footer {
+    @apply mt-8 text-sm text-gray-500;
+  }
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+/* Global styles */
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+/* Animation for loading spinner */
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-spin {
+  animation: spin 1s linear infinite;
+}

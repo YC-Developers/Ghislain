@@ -40,7 +40,6 @@ const Salaries = () => {
   const handleChange = (e) => {
     const { name, value } = e.target;
 
-<<<<<<< HEAD
     if (name === 'employeeNumber') {
       // When employee is selected, auto-fill the gross salary from department
       const selectedEmployee = employees.find(emp => emp.employeeNumber === parseInt(value));
@@ -62,9 +61,6 @@ const Salaries = () => {
         });
       }
     } else if (name === 'grossSalary' || name === 'totalDeduction') {
-=======
-    if (name === 'grossSalary' || name === 'totalDeduction') {
->>>>>>> e66a3ccf81839cb450375bf6a2533ff36cafb2b8
       const grossSalary = name === 'grossSalary' ? parseFloat(value) || 0 : parseFloat(formData.grossSalary) || 0;
       const totalDeduction = name === 'totalDeduction' ? parseFloat(value) || 0 : parseFloat(formData.totalDeduction) || 0;
       const netSalary = Math.max(0, grossSalary - totalDeduction).toFixed(2);
@@ -174,7 +170,7 @@ const Salaries = () => {
   if (loading && salaries.length === 0) {
     return (
       <div className="flex justify-center items-center h-64">
-        <div className="w-12 h-12 border-4 border-darkred-700 border-t-transparent rounded-full animate-spin"></div>
+        <div className="w-12 h-12 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
       </div>
     );
   }
@@ -383,7 +379,7 @@ const Salaries = () => {
                       <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                         <button
                           onClick={() => handleEdit(salary)}
-                          className="text-darkred-600 hover:text-darkred-900 mr-4 transition-colors duration-200"
+                          className="text-blue-600 hover:text-blue-900 mr-4 transition-colors duration-200"
                         >
                           <span className="flex items-center">
                             <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">

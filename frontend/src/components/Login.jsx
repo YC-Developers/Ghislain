@@ -45,49 +45,40 @@ const Login = ({ onLogin }) => {
 
   return (
     <div className="min-h-screen flex flex-col md:flex-row">
-      {/* Left side - Darkred background with logo and text */}
-      <div className="w-full md:w-1/2 bg-gradient-to-br from-darkred-800 to-darkred-950 flex flex-col justify-center items-center p-8 md:p-12 text-white">
+      {/* Left side - Blue background with logo and text */}
+      <div className="w-full md:w-1/2 bg-blue-600 flex flex-col justify-center items-center p-8 md:p-12 text-white">
         <div className="max-w-md mx-auto text-center">
-          <div className="mb-8 bg-darkred-700/30 p-6 rounded-full inline-block">
-            <svg className="h-20 w-20 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <div className="mb-8">
+            <svg className="h-16 w-16 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
             </svg>
           </div>
-          <h1 className="text-3xl md:text-4xl font-bold mb-4 drop-shadow-md">Employee Payroll Management System</h1>
-          <p className="text-lg md:text-xl mb-8 text-white/80">Manage your employees, departments, and payroll efficiently</p>
-
-          <div className="space-y-4 text-left bg-darkred-900/30 p-6 rounded-lg shadow-lg backdrop-blur-sm">
+          <h1 className="text-4xl font-bold mb-4">Employee Payroll Management System</h1>
+          <p className="text-xl mb-8">Manage your employees, departments, and payroll efficiently</p>
+          <div className="space-y-4 text-left">
             <div className="flex items-center">
-              <div className="flex-shrink-0 bg-darkred-700 rounded-full p-1">
-                <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                </svg>
-              </div>
-              <span className="ml-3">Manage employee information</span>
+              <svg className="h-6 w-6 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+              </svg>
+              <span>Manage employee information</span>
             </div>
             <div className="flex items-center">
-              <div className="flex-shrink-0 bg-darkred-700 rounded-full p-1">
-                <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                </svg>
-              </div>
-              <span className="ml-3">Track department data</span>
+              <svg className="h-6 w-6 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+              </svg>
+              <span>Track department data</span>
             </div>
             <div className="flex items-center">
-              <div className="flex-shrink-0 bg-darkred-700 rounded-full p-1">
-                <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                </svg>
-              </div>
-              <span className="ml-3">Process salary payments</span>
+              <svg className="h-6 w-6 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+              </svg>
+              <span>Process salary payments</span>
             </div>
             <div className="flex items-center">
-              <div className="flex-shrink-0 bg-darkred-700 rounded-full p-1">
-                <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                </svg>
-              </div>
-              <span className="ml-3">Generate detailed reports</span>
+              <svg className="h-6 w-6 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+              </svg>
+              <span>Generate detailed reports</span>
             </div>
           </div>
         </div>
@@ -97,8 +88,8 @@ const Login = ({ onLogin }) => {
       <div className="w-full md:w-1/2 bg-white flex items-center justify-center p-8 md:p-12">
         <div className="max-w-md w-full">
           <div className="text-center mb-8">
-            <div className="inline-block p-3 rounded-full bg-darkred-50 mb-4">
-              <svg className="h-10 w-10 text-darkred-700" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <div className="inline-block p-3 rounded-full bg-blue-50 mb-4">
+              <svg className="h-10 w-10 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1" />
               </svg>
             </div>
@@ -124,7 +115,7 @@ const Login = ({ onLogin }) => {
                   name="username"
                   type="text"
                   required
-                  className="appearance-none block w-full pl-10 px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-darkred-500 focus:border-darkred-500 sm:text-sm"
+                  className="appearance-none block w-full pl-10 px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
                   placeholder="admin"
                   value={formData.username}
                   onChange={handleChange}
@@ -147,7 +138,7 @@ const Login = ({ onLogin }) => {
                   name="password"
                   type="password"
                   required
-                  className="appearance-none block w-full pl-10 px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-darkred-500 focus:border-darkred-500 sm:text-sm"
+                  className="appearance-none block w-full pl-10 px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
                   placeholder="••••••••"
                   value={formData.password}
                   onChange={handleChange}
@@ -176,7 +167,7 @@ const Login = ({ onLogin }) => {
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-darkred-700 hover:bg-darkred-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-darkred-500 transition-colors duration-200"
+                className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors duration-200"
               >
                 {loading ? (
                   <svg className="animate-spin -ml-1 mr-2 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
@@ -201,7 +192,7 @@ const Login = ({ onLogin }) => {
               </div>
             </div>
             <div className="mt-4 text-center">
-              <a href="/register" className="text-darkred-700 hover:text-darkred-800 font-medium transition-colors duration-200">
+              <a href="/register" className="text-blue-600 hover:text-blue-800 font-medium transition-colors duration-200">
                 Register as admin
               </a>
             </div>

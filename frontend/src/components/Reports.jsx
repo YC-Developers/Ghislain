@@ -44,11 +44,108 @@ const Reports = () => {
     );
   };
 
+  const handlePrint = () => {
+    const printContent = printRef.current;
+    const originalContents = document.body.innerHTML;
+
+    // Create a new window for printing
+    const printWindow = window.open('', '_blank');
+    printWindow.document.write(`
+      <html>
+        <head>
+          <title>Payroll Report - ${month}</title>
+          <style>
+            body {
+              font-family: Arial, sans-serif;
+              margin: 20px;
+              color: #000;
+            }
+            .report-header {
+              text-align: center;
+              margin-bottom: 30px;
+              border-bottom: 2px solid #000;
+              padding-bottom: 20px;
+            }
+            .report-header h1 {
+              font-size: 24px;
+              margin: 0 0 10px 0;
+              font-weight: bold;
+            }
+            .report-header h2 {
+              font-size: 18px;
+              margin: 0;
+              color: #666;
+            }
+            table {
+              width: 100%;
+              border-collapse: collapse;
+              margin: 20px 0;
+            }
+            th, td {
+              border: 1px solid #000;
+              padding: 8px;
+              text-align: left;
+            }
+            th {
+              background-color: #f0f0f0;
+              font-weight: bold;
+            }
+            .text-right {
+              text-align: right;
+            }
+            .font-bold {
+              font-weight: bold;
+            }
+            .bg-gray-100 {
+              background-color: #f5f5f5;
+            }
+            .signature-section {
+              margin-top: 50px;
+              display: flex;
+              justify-content: space-between;
+              page-break-inside: avoid;
+            }
+            .signature-box {
+              width: 200px;
+              text-align: center;
+            }
+            .signature-line {
+              border-top: 1px solid #000;
+              margin-top: 60px;
+              padding-top: 5px;
+            }
+            .report-footer {
+              margin-top: 30px;
+              font-size: 12px;
+              color: #666;
+            }
+            @media print {
+              body { margin: 0; }
+              .no-print { display: none; }
+            }
+          </style>
+        </head>
+        <body>
+          ${printContent.innerHTML}
+        </body>
+      </html>
+    `);
+
+    printWindow.document.close();
+    printWindow.focus();
+
+    // Wait for content to load then print
+    setTimeout(() => {
+      printWindow.print();
+      printWindow.close();
+    }, 250);
+  };
+
   return (
     <div className="py-6">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <h1 className="text-2xl font-semibold text-gray-900">Monthly Payroll Reports</h1>
-        
+
         <div className="mt-6 bg-white shadow px-4 py-5 sm:rounded-lg sm:p-6">
           <form onSubmit={generateReport}>
             <div className="grid grid-cols-6 gap-6">
@@ -94,7 +191,15 @@ const Reports = () => {
                   <h2 className="text-xl font-semibold text-gray-900">
                     Payroll Report for {month}
                   </h2>
-                  
+                  <button
+                    onClick={handlePrint}
+                    className="btn-primary flex items-center no-print"
+                  >
+                    <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z" />
+                    </svg>
+                    Print Report
+                  </button>
                 </div>
 
                 <div ref={printRef}>
@@ -123,26 +228,49 @@ const Reports = () => {
                             <td>{`${record.firstName} ${record.lastName}`}</td>
                             <td>{record.position}</td>
                             <td>{record.departmentName}</td>
-                            <td className="text-right">${parseFloat(record.grossSalary).toFixed(2)}</td>
-                            <td className="text-right">${parseFloat(record.totalDeduction).toFixed(2)}</td>
-                            <td className="text-right">${parseFloat(record.netSalary).toFixed(2)}</td>
+                            <td className="text-right">{parseFloat(record.grossSalary).toFixed(2)} RWF</td>
+                            <td className="text-right">{parseFloat(record.totalDeduction).toFixed(2)} RWF</td>
+                            <td className="text-right">{parseFloat(record.netSalary).toFixed(2)} RWF</td>
                           </tr>
                         ))}
                         {/* Summary row */}
                         {reportData.length > 0 && (
                           <tr className="font-bold bg-gray-100">
                             <td colSpan="3" className="text-right">Total:</td>
-                            <td className="text-right">${calculateTotals().grossSalary.toFixed(2)}</td>
-                            <td className="text-right">${calculateTotals().totalDeduction.toFixed(2)}</td>
-                            <td className="text-right">${calculateTotals().netSalary.toFixed(2)}</td>
+                            <td className="text-right">{calculateTotals().grossSalary.toFixed(2)} RWF</td>
+                            <td className="text-right">{calculateTotals().totalDeduction.toFixed(2)} RWF</td>
+                            <td className="text-right">{calculateTotals().netSalary.toFixed(2)} RWF</td>
                           </tr>
                         )}
                       </tbody>
                     </table>
                   </div>
 
-                  <div className="mt-8 text-sm text-gray-500">
+                  {/* Signature Section */}
+                  <div className="signature-section">
+                    <div className="signature-box">
+                      <div className="signature-line">
+                        <p className="font-bold">Prepared By</p>
+                        <p className="text-sm text-gray-600 mt-1">HR Manager</p>
+                      </div>
+                    </div>
+                    <div className="signature-box">
+                      <div className="signature-line">
+                        <p className="font-bold">Reviewed By</p>
+                        <p className="text-sm text-gray-600 mt-1">Finance Manager</p>
+                      </div>
+                    </div>
+                    <div className="signature-box">
+                      <div className="signature-line">
+                        <p className="font-bold">Approved By</p>
+                        <p className="text-sm text-gray-600 mt-1">General Manager</p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="report-footer">
                     <p>Report generated on: {new Date().toLocaleDateString()} at {new Date().toLocaleTimeString()}</p>
+                    <p className="mt-2">Employee Payroll Management System - Confidential Document</p>
                   </div>
                 </div>
               </div>
